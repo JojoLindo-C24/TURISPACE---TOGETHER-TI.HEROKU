@@ -1,26 +1,30 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class infod_tif_acessos extends Model {
+export default class infoc_jdf_cartao extends Model {
   static init(sequelize, DataTypes) {
   super.init({
-    id_acesso: {
+    id_cartao: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nm_tela: {
+    nr_cartao: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    qtd_acessos: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    nm_usuario: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    dt_expiracao: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'infod_tif_acessos',
+    tableName: 'infoc_jdf_cartao',
     timestamps: false,
     indexes: [
       {
@@ -28,11 +32,11 @@ export default class infod_tif_acessos extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_acesso" },
+          { name: "id_cartao" },
         ]
       },
     ]
   });
-  return infod_tif_acessos;
+  return infoc_jdf_cartao;
   }
 }
