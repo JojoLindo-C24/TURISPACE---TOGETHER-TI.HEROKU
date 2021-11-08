@@ -142,7 +142,7 @@ import _infod_tif_autorizados from  "./infod_tif_autorizados.js";
 import _infod_tif_chat from  "./infod_tif_chat.js";
 import _infod_tif_comentario from  "./infod_tif_comentario.js";
 import _infod_tif_comunidade from  "./infod_tif_comunidade.js";
-import _infod_tif_favoritos from  "./infod_tif_favoritos.js.js";
+import _infod_tif_favoritos from  "./infod_tif_favoritos.js";
 import _infod_tif_usuario from  "./infod_tif_usuario.js";
 import _infod_tif_usuario_comunidade from  "./infod_tif_usuario_comunidade.js";
 import _insf_tb_produto from  "./insf_tb_produto.js";
