@@ -139,10 +139,10 @@ const app = express();
 
     app.get('/chat', async (req, resp) => {
         try {
-            let r = await
+            let chat = await
                 db.infoc_tht_chat.findAll();
 
-            resp.send(r);
+            resp.send(chat);
         } catch(e){
             resp.send(e.toString())
         }
