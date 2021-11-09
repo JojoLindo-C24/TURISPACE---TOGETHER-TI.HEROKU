@@ -21,7 +21,7 @@ const app = express();
     app.get('/cadastro', async (req, resp) => {
         try {
             let cadastro = await
-                db.infoc_tht_cadastro.findAll({ order: [['id_cadastro', 'desc' ]] })
+                db.infoc_tht_cadastro.findAll({ order: [['id_cadastro', 'desc' ]] });
             resp.send(cadastro);
         } catch(e){
             resp.send(e.toString())
@@ -60,7 +60,7 @@ const app = express();
     app.get('/login', async (req, resp) => {
         try {
             let login = await
-                db.infoc_tht_login.findAll(({ order: [['id_login', 'desc' ]] }))
+                db.infoc_tht_login.findAll({ order: [['id_login', 'desc' ]] });
             resp.send(login);
         } catch(e){
             resp.send(e.toString())
@@ -95,7 +95,7 @@ const app = express();
     app.get('/usuario', async (req, resp) => {
         try {
             let usuario = await
-                db.infoc_tht_usuario.findAll(({ order: [['id_usuario', 'desc' ]] }))
+                db.infoc_tht_usuario.findAll({ order: [['id_usuario', 'desc' ]] });
             resp.send(usuario);
         } catch(e){
             resp.send(e.toString())
@@ -140,7 +140,7 @@ const app = express();
     app.get('/chat', async (req, resp) => {
         try {
             let chat = await
-                db.infoc_tht_chat.findAll(({ order: [['id_chat', 'desc' ]] }));
+                db.infoc_tht_chat.findAll({ order: [['id_chat', 'desc' ]] });
 
             resp.send(chat);
         } catch(e){
