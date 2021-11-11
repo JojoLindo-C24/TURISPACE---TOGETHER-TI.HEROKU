@@ -20,8 +20,9 @@ const app = express();
 //CADASTRO
     app.get('/cadastro', async (req, resp) => {
         try {
-            let cadastro = await
-                db.infoc_tht_cadastro.findAll({ order: [['id_cadastro', 'desc' ]] });
+            let cadastro = await db.infoc_tht_cadastro.findAll(
+                { order: [['id_cadastro', 'desc' ]] }
+            );
             resp.send(cadastro);
         } catch(e){
             resp.send(e.toString())
