@@ -18,51 +18,58 @@ const app = express();
     
     app.post('/cadastro', async (req, resp) => {
         try {
-            let cadastro = req.body;
+            let usuario = req.body;
     
-            let t = await db.infoc_tht_cadastro.findOne(
+            let t = await db.infoc_tht_usuario.findOne(
                 { 
-                    where: { ds_email: cadastro.email, ds_senha: cadastro.senha, nr_celular: cadastro.celular, nm_nome: cadastro.nome }
+                    where: { ds_email: usuario.email, ds_senha: usuario.senha, nr_celular: usuario.celular, nm_nome: usuario.nome }
                 })
             if (t != null)
             return resp.send({ erro: 'Alguma dessas informações já está sendo utilizada' });
     
-            let h = await db.infoc_tht_cadastro.create({
-                ds_email: cadastro.email,
-                ds_senha: cadastro.senha,
-                nr_celular: cadastro.celular,
-                nm_nome: cadastro.nome
+            let h = await db.infoc_tht_usuario.create({
+                ds_email: usuario.email,
+                ds_senha: usuario.senha,
+                nr_celular: usuario.celular,
+                nm_nome: usuario.nome
             })
             resp.send(h);
         } catch (e) {
-                resp.send({ erro: 'Ocorreu um erro!'})
+            resp.send(e.toString())
         }
     })
 
 
 
 //LOGIN
+        app.get('/login', async (req, resp) => {
+            try {
+                let usuario = await db.infoc_tht_usuario.findAll({ order: [['id_usuario', 'desc' ]] });
+                resp.send(usuario);
 
-    app.post('/login', async (req, resp) => {
-        //  
-        let login = req.body;
+            } catch (e) {
+                resp.send({ erro: e.toString()})
+            }
+        });
 
-        let t = await db.infoc_tht_cadastro.findOne(
-            {
-                where: {
-                    ds_email: login.email,
-                    ds_senha: login.senha
-                }
-            })
+        app.post('/login', async (req, resp) => {
+            //  
+            let login = req.body;
 
-        if (t == null)
-            return resp.send({ erro: 'Crendenciais Inválidas' });
+            let t = await db.infoc_tht_usuario.findOne(
+                {
+                    where: {
+                        ds_email: login.email,
+                        ds_senha: login.senha
+                    }
+                })
 
-        resp.send(200);
-        // } catch (e) {
-        //     resp.send({ erro: 'Ocorreu um erro!'})
-        // }
-    });
+            if (t == null)
+                return resp.send({ erro: 'Crendenciais Inválidas' });
+
+            resp.send(200);
+        });
+
 
 
  //INSERIR LUGARES
@@ -114,14 +121,15 @@ const app = express();
 
     app.post('/usuario', async (req, resp) => {
         try {
-            let { cartao, login,  usuario, email, celular, nascimento, senha } = req.body;
+            let { usuario, email, celular, senha } = req.body;
 
             let r = await db.infoc_tht_usuario.create({
- 
+                nm_usuario: usuario,
+                ds_email: email,
+                nr_celular: celular,
+                ds_senha: senha
             });
             resp.send(r);
-
-
 
         } catch (e) {
             resp.send({ erro: e.toString() });
@@ -131,20 +139,6 @@ const app = express();
 
 
 //CHAT
-
-    // app.get('/chat', async (req, resp) => {
-    //     try {
-    //         let chat = await
-    //             db.infoc_tht_chat.findAll({ order: [['id_chat', 'desc' ]] });
-
-    //         resp.send(chat);
-    //     } catch(e){
-    //         resp.send(e.toString())
-    //     }
-
-
-    // });
-    
 
 
     app.post('/chat', async (req, resp) => {

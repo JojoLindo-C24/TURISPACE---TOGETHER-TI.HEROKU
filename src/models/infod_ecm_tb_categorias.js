@@ -1,30 +1,22 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class infoa_dtn_tb_venda extends Model {
+export default class infod_ecm_tb_categorias extends Model {
   static init(sequelize, DataTypes) {
   super.init({
-    id_venda: {
+    id_categoria: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    id_cliente: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    dt_pedido: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    ds_situacao: {
-      type: DataTypes.STRING(100),
-      allowNull: true
+    nm_categoria: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'infoa_dtn_tb_venda',
+    tableName: 'infod_ecm_tb_categorias',
     timestamps: false,
     indexes: [
       {
@@ -32,11 +24,11 @@ export default class infoa_dtn_tb_venda extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_venda" },
+          { name: "id_categoria" },
         ]
       },
     ]
   });
-  return infoa_dtn_tb_venda;
+  return infod_ecm_tb_categorias;
   }
 }

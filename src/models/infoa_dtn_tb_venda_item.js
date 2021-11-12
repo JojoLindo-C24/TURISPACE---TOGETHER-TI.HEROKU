@@ -1,46 +1,38 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class infoc_tct_pedido extends Model {
+export default class infoa_dtn_tb_venda_item extends Model {
   static init(sequelize, DataTypes) {
   super.init({
-    id_pedido: {
+    id_venda_item: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    id_cliente: {
+    id_produto: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'infoc_tct_cliente',
-        key: 'id_cliente'
+        model: 'infoa_dtn_tb_produto',
+        key: 'id_produto'
       }
     },
-    id_endereco: {
+    id_venda: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'infoc_tct_endereco',
-        key: 'id_endereco'
+        model: 'infoa_dtn_tb_venda',
+        key: 'id_venda'
       }
     },
-    id_compra: {
+    qtd_qtd: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'infoc_tct_compra',
-        key: 'id_compra'
-      }
-    },
-    bt_status: {
-      type: DataTypes.BOOLEAN,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'infoc_tct_pedido',
+    tableName: 'infoa_dtn_tb_venda_item',
     timestamps: false,
     indexes: [
       {
@@ -48,32 +40,25 @@ export default class infoc_tct_pedido extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "id_pedido" },
+          { name: "id_venda_item" },
         ]
       },
       {
-        name: "id_cliente",
+        name: "id_venda",
         using: "BTREE",
         fields: [
-          { name: "id_cliente" },
+          { name: "id_venda" },
         ]
       },
       {
-        name: "id_endereco",
+        name: "id_produto",
         using: "BTREE",
         fields: [
-          { name: "id_endereco" },
-        ]
-      },
-      {
-        name: "id_compra",
-        using: "BTREE",
-        fields: [
-          { name: "id_compra" },
+          { name: "id_produto" },
         ]
       },
     ]
   });
-  return infoc_tct_pedido;
+  return infoa_dtn_tb_venda_item;
   }
 }
