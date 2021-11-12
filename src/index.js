@@ -18,77 +18,92 @@ const app = express();
 
 
 //CADASTRO
-    app.get('/cadastro', async (req, resp) => {
+    
+    app.post('/cadastro', async (req, resp) => {
         try {
-            let cadastro = await db.infoc_tht_cadastro.findAll(
-                { order: [['id_cadastro', 'desc' ]] }
-            );
-            resp.send(cadastro);
-        } catch(e){
-            resp.send(e.toString())
-        }
-    });
-
-    app.post ('/cadastro', async(req, resp) =>{
-        try{
-            let {email, senha, celular, nome} =req.body;
-
-            let cadastro = await db.infoc_tht_cadastro.create({
-                ds_email: email,
-                ds_senha: senha,
-                nr_celular: celular,
-                nm_nome: nome
-            });
-            resp.send(cadastro);
-
-
-            // {
-            //     "email":"Julia@gmail.com",
-            //     "senha": "00893245",
-            //     "celular":"1190693917",
-            //     "nome": "Julia"
-            // }
-
-
+            let cadastro = req.body;
+    
+            let t = await db.infoc_tht_cadastro.findOne(
+                { 
+                    where: { ds_email: cadastro.email, ds_senha: cadastro.senha, nr_celular: cadastro.celular, nm_nome: cadastro.nome }
+                })
+            if (t != null)
+            return resp.send({ erro: 'Alguma dessas informações já está sendo utilizada' });
+    
+            let h = await db.infoc_tht_cadastro.create({
+                ds_email: cadastro.email,
+                ds_senha: cadastro.senha,
+                nr_celular: cadastro.celular,
+                nm_nome: cadastro.nome
+            })
+            resp.send(h);
         } catch (e) {
-            resp.send({ erro: e.toString() });
+                resp.send({ erro: 'Ocorreu um erro!'})
         }
     })
 
 
 
 //LOGIN
-    app.get('/login', async (req, resp) => {
-        try {
-            let login = await
-                db.infoc_tht_login.findAll({ order: [['id_login', 'desc' ]] });
-            resp.send(login);
-        } catch(e){
-            resp.send(e.toString())
-        }
+
+    app.post('/login', async (req, resp) => {
+        //  
+        let login = req.body;
+
+        let t = await db.infoc_tht_cadastro.findOne(
+            {
+                where: {
+                    ds_email: login.email,
+                    ds_senha: login.senha
+                }
+            })
+
+        if (t == null)
+            return resp.send({ erro: 'Crendenciais Inválidas' });
+
+        resp.send(200);
+        // } catch (e) {
+        //     resp.send({ erro: 'Ocorreu um erro!'})
+        // }
     });
 
 
-    app.post ('/login', async(req, resp) =>{
-        try{
-            let {cadastro, email, senha} =req.body;
+ //INSERIR LUGARES
+    app.post('/inserirLugares', async (req, resp) => {
+        try {
+            let insert = req.body;
 
-            let login = await db.infoc_tht_login.create({
-                id_cadastro:cadastro,
-                ds_email: email,
-                ds_senha: senha
-            });
-            resp.send(login);
-            // {
-            //     "cadastro": "3",
-            //     "email": "Julia@gmail.com",
-            //     "senha": "Julia"
-            // }
+        // let t = await db.infoc_tht_lugares.findOne(
+        //     { 
+        //         where: {  }
+        //     })
+        // if (t != null)
+        // return resp.send({ erro: 'Alguma dessas informações já está sendo utilizada' });
 
+            let h = await db.infoc_tht_lugares.create({
+                nm_lugar: insert.nome,
+                ds_avaliacao: insert.avaliacao,
+                ds_endereco: insert.endereco,
+                ds_imagem: insert.imagem,
+                ds_informacao: insert.informacao,
+                ds_horario_fds: insert.horarioFds,
+                ds_horario_dds: insert.horarioDds,
+                ds_categoria: insert.categoria
+            })
+            resp.send(h);
         } catch (e) {
-            resp.send({ erro: e.toString() });
+            resp.send({ erro: 'Ocorreu um erro' })
         }
+
     })
+
+
+ //LUGARES
+    app.get('', async (req, resp) => {
+        
+    })
+
+
 
 
 
