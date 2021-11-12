@@ -1,7 +1,4 @@
-// ----------------FATLAM as TABELAS:
-// pacote;
-// compra:
-//  arrumar a LUGAR-------------------------
+
 
 
 
@@ -98,10 +95,7 @@ const app = express();
     })
 
 
- //LUGARES
-    app.get('', async (req, resp) => {
-        
-    })
+ 
 
 
 
@@ -123,25 +117,10 @@ const app = express();
             let { cartao, login,  usuario, email, celular, nascimento, senha } = req.body;
 
             let r = await db.infoc_tht_usuario.create({
-                id_cartao: cartao,
-                id_login:login,
-                nm_usuario: usuario,
-                ds_email: email,
-                nr_celular: celular,
-                dt_nascimento: nascimento,
-                ds_senha: senha
+ 
             });
             resp.send(r);
 
-            // {
-            //     "cartao" : "",
-            //     "login": "",
-            //     " usuario": "",
-            //      "email": "",
-            //      "celular": "",
-            //      "nascimento": "",
-            //      "senha": ""
-            //  }
 
 
         } catch (e) {
@@ -162,6 +141,8 @@ const app = express();
         } catch(e){
             resp.send(e.toString())
         }
+
+        
     });
     app.post ('/chat', async(req, resp) =>{
         try{
@@ -182,32 +163,32 @@ const app = express();
 
 
  //LUGAR 
-        app.get('/lugar', async (req, resp) => {
-            try {
-                let lugar = await
-                    db.infoc_tht_lugar.findAll({ order: [['id_lugar', 'desc' ]] });
+        // app.get('/lugar', async (req, resp) => {
+        //     try {
+        //         let lugar = await
+        //             db.infoc_tht_lugar.findAll({ order: [['id_lugar', 'desc' ]] });
 
-                resp.send(lugar);
-            } catch(e){
-                resp.send(e.toString())
-            }
-        });
+        //         resp.send(lugar);
+        //     } catch(e){
+        //         resp.send(e.toString())
+        //     }
+        // });
 
 
-        app.post('/lugar', async (req, resp) => {
-            try {
-                let { lugar, avaliacao, endereco, img, informacao, data, horario } = req.body;
+        // app.post('/lugar', async (req, resp) => {
+        //     try {
+        //         let { lugar, avaliacao, endereco, img, informacao, data, horario } = req.body;
 
-                let r = await db.infoc_tht_lugar.create({
-                    nm_lugar:lugar,
-	                ds_avaliacao: avaliacao,
-	                ds_endereco: endereco,
-	                ds_imagem:img,
-	                ds_informacao: informacao,
-	                ds_dias: data,
-	                dt_horario: horario
-                });
-                resp.send(r);
+        //         let r = await db.infoc_tht_lugar.create({
+        //             nm_lugar:lugar,
+	    //             ds_avaliacao: avaliacao,
+	    //             ds_endereco: endereco,
+	    //             ds_imagem:img,
+	    //             ds_informacao: informacao,
+	    //             ds_dias: data,
+	    //             dt_horario: horario
+        //         });
+                // resp.send(r);
 
             //     {
             //         "lugar": "Shopping Jk Iguatemi",
@@ -221,10 +202,10 @@ const app = express();
 
 
 
-            } catch (e) {
-                resp.send({ erro: e.toString() });
-            }
-        });
+        //     } catch (e) {
+            //  resp.send({ erro: e.toString() });
+        //     }
+        // });
 
 
 //CARTÃO
