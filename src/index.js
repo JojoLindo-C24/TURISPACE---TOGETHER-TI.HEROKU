@@ -132,34 +132,57 @@ const app = express();
 
 //CHAT
 
+    // app.get('/chat', async (req, resp) => {
+    //     try {
+    //         let chat = await
+    //             db.infoc_tht_chat.findAll({ order: [['id_chat', 'desc' ]] });
+
+    //         resp.send(chat);
+    //     } catch(e){
+    //         resp.send(e.toString())
+    //     }
+
+
+    // });
+    
+
+
+    app.post('/chat', async (req, resp) => {
+        try {
+            let chat = req.body;
+            
+            if (!chat.nome || chat.nome.replace(/\n/g, '') == '')
+            return resp.send({ erro: 'Nome é obrigatória!' });
+
+            if (!chat.mensagem || chat.mensagem.replace(/\n/g, '') == '')
+                return resp.send({ erro: 'Mensagem é obrigatória!' });
+            
+            
+            let mensagem = {
+                nm_nome: chat.nome,
+                ds_mensagem: chat.mensagem,
+                dt_mensagem: new Date()
+            }
+    
+            let r = await db.infoc_tht_chat.create(mensagem);
+            resp.send(r);
+            
+        } catch (e) {
+            resp.send('Deu erro');
+            console.log(e.toString());
+        }
+    });
+
     app.get('/chat', async (req, resp) => {
         try {
-            let chat = await
-                db.infoc_tht_chat.findAll({ order: [['id_chat', 'desc' ]] });
-
-            resp.send(chat);
-        } catch(e){
+            let mensagens = await  
+             db.infoc_tht_chat.findAll({ order: [['id_mensagem', 'desc' ]] });
+              
+            resp.send(mensagens);
+        } catch (e) {
             resp.send(e.toString())
         }
-
-        
-    });
-    app.post ('/chat', async(req, resp) =>{
-        try{
-            let { nome, mensagem, data} =req.body;
-
-            let r = await db.infoc_tht_chat.create({
-                nm_nome: nome,
-                ds_mensagem: mensagem,
-                dt_mensagem: data
-            });
-            resp.send(r);
-
-        } catch (e) {
-            resp.send({ erro: e.toString() });
-        }
     })
-
 
 
  //LUGAR 
