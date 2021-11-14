@@ -1,7 +1,3 @@
-
-
-
-
 import db from './db.js';
 import express from 'express';
 import cors from 'cors';
@@ -19,21 +15,18 @@ const app = express();
     app.post('/cadastro', async (req, resp) => {
         try {
             let usuario = req.body;
-    
-            let t = await db.infoc_tht_usuario.findOne(
-                { 
-                    where: { ds_email: usuario.email, ds_senha: usuario.senha, nr_celular: usuario.celular, nm_nome: usuario.nome }
-                })
-            if (t != null)
-            return resp.send({ erro: 'Alguma dessas informações já está sendo utilizada' });
-    
-            let h = await db.infoc_tht_usuario.create({
+            let h = await db.infoc_tht_usuario.create
+            ({
                 ds_email: usuario.email,
                 ds_senha: usuario.senha,
                 nr_celular: usuario.celular,
-                nm_nome: usuario.nome
+                nm_usuario: usuario.nome
             })
+            if(usuario.email == null || usuario.senha == null || usuario.celular == null || usuario.nome == null){
+                resp.send({ erro: "Há um campo não preechido"})
+            } else {
             resp.send(h);
+            }
         } catch (e) {
             resp.send(e.toString())
         }
@@ -68,6 +61,32 @@ const app = express();
                 return resp.send({ erro: 'Crendenciais Inválidas' });
 
             resp.send(200);
+        });
+
+
+// ALTERAÇÕES USUARIO
+
+
+        app.put('/infoUsuario', async (req, resp) => {
+            try{
+                let id = req.params.id;
+                let {nome, email, senha, celular} = req.body;
+
+                let t = await db.infoc_tht_usuario.update({
+                    nm_usuario: nome,
+                    ds_email: email,
+                    ds_senha: senha,
+                    nr_celular: celular
+                },
+                {
+                    where: { id_usuario: id }
+                });
+
+                resp.sendStatus(200);
+
+            } catch(e) {
+                resp.send({ erro: e.toString()});
+            }
         });
 
 
