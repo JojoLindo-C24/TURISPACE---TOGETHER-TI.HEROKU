@@ -139,7 +139,8 @@ const app = express();
                 ds_imagem2: insert.imagem2,
                 ds_imagem3: insert.imagem3,
                 ds_imagem4: insert.imagem4,
-                ds_link: insert.link
+                ds_link: insert.link,
+                bt_ativo: inserir.status
             })
             resp.send(h);
         } catch(e) {
