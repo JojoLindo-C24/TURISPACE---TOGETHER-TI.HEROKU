@@ -123,7 +123,7 @@ const app = express();
 
  //INSERT PACOTES INICIAL
 
-    app.post('inserirPacotes', async (req, resp) => {
+    app.post('/inserirPacotes', async (req, resp) => {
         try {
             let insert = req.body;
             let h = await db.infoc_tht_pacote.create({
@@ -140,11 +140,11 @@ const app = express();
                 ds_imagem3: insert.imagem3,
                 ds_imagem4: insert.imagem4,
                 ds_link: insert.link,
-                bt_ativo: inserir.status
+                bt_ativo: insert.status
             })
             resp.send(h);
         } catch(e) {
-            resp.send({erro: 'Ocorreu um ERRO'})
+            resp.send(e.toString())
         }
     })
 
