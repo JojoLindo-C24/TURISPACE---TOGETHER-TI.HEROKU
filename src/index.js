@@ -121,6 +121,18 @@ const app = express();
     })
 
 
+ //GET LUGARES
+
+    app.get('/shoppingLugares', async (req, resp) => {
+        try{
+            let shopping = await db.infoc_tht_lugar.findAll();
+            resp.send(shopping);
+        } catch(e) {
+            resp.send({ erro: 'Ocorreu um erro' })
+        }
+    })
+
+
  //INSERT PACOTES INICIAL
 
     app.post('/inserirPacotes', async (req, resp) => {
