@@ -103,7 +103,7 @@ const app = express();
         // if (t != null)
         // return resp.send({ erro: 'Alguma dessas informações já está sendo utilizada' });
 
-            let h = await db.infoc_tht_lugares.create({
+            let h = await db.infoc_tht_lugar.create({
                 nm_lugar: insert.nome,
                 ds_avaliacao: insert.avaliacao,
                 ds_endereco: insert.endereco,
@@ -121,8 +121,43 @@ const app = express();
     })
 
 
- 
+ //INSERT PACOTES INICIAL
 
+    app.post('inserirPacotes', async (req, resp) => {
+        try {
+            let insert = req.body;
+            let h = await db.infoc_tht_pacote.create({
+                nm_pacote: insert.titulo,
+                dt_data: insert.data,
+                ds_ingresso: insert.ingresso,
+                vl_preco: insert.preco,
+                ds_horario: insert.horario,
+                ds_cancelamento: insert.cancelamento,
+                ds_endereco: insert.endereco,
+                ds_acesso: insert.acesso,
+                ds_imagem: insert.imagem1,
+                ds_imagem2: insert.imagem2,
+                ds_imagem3: insert.imagem3,
+                ds_imagem4: insert.imagem4,
+                ds_link: insert.link
+            })
+            resp.send(h);
+        } catch(e) {
+            resp.send({erro: 'Ocorreu um ERRO'})
+        }
+    })
+
+ 
+ //GET PACOTES INICIAL
+
+    app.get('/pacotesInicial', async (req, resp) => {
+        try{
+            let pacote = await db.infoc_tht_pacote.findAll();
+            resp.send(pacote);
+        } catch(e) {
+            resp.send(e.toString())
+        }   
+    })
 
 
 
